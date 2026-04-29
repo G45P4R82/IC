@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MSR: Acoplamento de Modelos ML</title>
-    <!-- Bulma CSS via CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Bulma CSS v1.0.2 via CDN (Suporte nativo ao Modo Dark) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <!-- FontAwesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .hero-bg { background-color: #2c3e50; color: white; }
-        .hero-bg .title, .hero-bg .subtitle { color: white; }
-        .code-block { background-color: #f5f5f5; padding: 1rem; border-radius: 5px; overflow-x: auto; }
+        .code-block { padding: 1rem; border-radius: 5px; overflow-x: auto; }
     </style>
 </head>
 <body>
 
-    <section class="hero is-info is-medium hero-bg">
+    <section class="hero is-info is-medium">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title is-1">
@@ -35,7 +33,7 @@
         <div class="container">
             <div class="content">
                 <h2 class="title is-3"><i class="fas fa-search"></i> Metodologia de Mineração (MSR)</h2>
-                <p>Para garantir a reprodutibilidade do estudo, a extração de dados foi realizada utilizando a <a href="https://cli.github.com/">GitHub CLI (<code>gh</code>)</a> e a <strong>GitHub REST API</strong>, sem a necessidade de clonar os repositórios localmente.</p>
+                <p>Para garantir a reprodutibilidade do estudo, a extração de dados foi realizada utilizando a <a href="https://cli.github.com/" class="has-text-info">GitHub CLI (<code>gh</code>)</a> e a <strong>GitHub REST API</strong>, sem a necessidade de clonar os repositórios localmente.</p>
                 
                 <hr>
 
@@ -76,26 +74,26 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
         </div>
     </section>
 
-    <section class="section has-background-light">
+    <section class="section">
         <div class="container">
             <h2 class="title is-3"><i class="fas fa-table"></i> Dataset e Resultados (Amostra 2025-2026)</h2>
             <div class="table-container">
                 <table class="table is-striped is-hoverable is-fullwidth is-bordered">
                     <thead>
-                        <tr class="has-background-info-dark">
-                            <th class="has-text-white">Repositório</th>
-                            <th class="has-text-white">Padrão Arquitetural</th>
-                            <th class="has-text-white has-text-centered">Nível de Acoplamento</th>
-                            <th class="has-text-white has-text-centered">Fan-out</th>
-                            <th class="has-text-white has-text-centered">Imports ML</th>
-                            <th class="has-text-white has-text-centered">Chamadas Diretas</th>
-                            <th class="has-text-white">Evidência no Código</th>
+                        <tr>
+                            <th>Repositório</th>
+                            <th>Padrão Arquitetural</th>
+                            <th class="has-text-centered">Nível de Acoplamento</th>
+                            <th class="has-text-centered">Fan-out</th>
+                            <th class="has-text-centered">Imports ML</th>
+                            <th class="has-text-centered">Chamadas Diretas</th>
+                            <th>Evidência no Código</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a href="https://github.com/Suraj-G-Rao/Network_Security" target="_blank"><strong>Suraj-G-Rao/Network_Security</strong></a></td>
-                            <td><span class="tag is-light">Modelo Embarcado (API Local)</span></td>
+                            <td><a href="https://github.com/Suraj-G-Rao/Network_Security" target="_blank" class="has-text-info"><strong>Suraj-G-Rao/Network_Security</strong></a></td>
+                            <td><span class="tag">Modelo Embarcado (API Local)</span></td>
                             <td class="has-text-centered has-text-danger has-text-weight-bold">4 (Forte)</td>
                             <td class="has-text-centered">11</td>
                             <td class="has-text-centered">3</td>
@@ -103,8 +101,8 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
                             <td><code>app.py:10 (import pymongo, pandas); app.py:18 (network_model.predict)</code></td>
                         </tr>
                         <tr>
-                            <td><a href="https://github.com/zimingttkx/Network-Security-Based-On-ML" target="_blank"><strong>zimingttkx/Network-Security-Based-On-ML</strong></a></td>
-                            <td><span class="tag is-light">Modelo Embarcado (API Local)</span></td>
+                            <td><a href="https://github.com/zimingttkx/Network-Security-Based-On-ML" target="_blank" class="has-text-info"><strong>zimingttkx/Network-Security-Based-On-ML</strong></a></td>
+                            <td><span class="tag">Modelo Embarcado (API Local)</span></td>
                             <td class="has-text-centered has-text-danger has-text-weight-bold">4 (Forte)</td>
                             <td class="has-text-centered">31</td>
                             <td class="has-text-centered">3</td>
@@ -112,8 +110,8 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
                             <td><code>app.py:17 (import TrainingPipeline); app.py:42 (model.predict)</code></td>
                         </tr>
                         <tr>
-                            <td><a href="https://github.com/kamjin3086/kokoro-onnx-fastapi" target="_blank"><strong>kamjin3086/kokoro-onnx-fastapi</strong></a></td>
-                            <td><span class="tag is-light">Inference-Agnostic (ONNX)</span></td>
+                            <td><a href="https://github.com/kamjin3086/kokoro-onnx-fastapi" target="_blank" class="has-text-info"><strong>kamjin3086/kokoro-onnx-fastapi</strong></a></td>
+                            <td><span class="tag">Inference-Agnostic (ONNX)</span></td>
                             <td class="has-text-centered has-text-success has-text-weight-bold">2 (Médio-Fraco)</td>
                             <td class="has-text-centered">12</td>
                             <td class="has-text-centered">0</td>
@@ -121,8 +119,8 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
                             <td><code>src/chinese/main.py:10 (pip install kokoro-onnx); src/chinese/main.py:13 (download .onnx)</code></td>
                         </tr>
                         <tr>
-                            <td><a href="https://github.com/Harly-1506/polyp-segmentation-mlops" target="_blank"><strong>Harly-1506/polyp-segmentation-mlops</strong></a></td>
-                            <td><span class="tag is-light">Triton Inference Server</span></td>
+                            <td><a href="https://github.com/Harly-1506/polyp-segmentation-mlops" target="_blank" class="has-text-info"><strong>Harly-1506/polyp-segmentation-mlops</strong></a></td>
+                            <td><span class="tag">Triton Inference Server</span></td>
                             <td class="has-text-centered has-text-success has-text-weight-bold">1 (Fraco)</td>
                             <td class="has-text-centered">14</td>
                             <td class="has-text-centered">0</td>
@@ -130,8 +128,8 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
                             <td><code>app/backend/clients.py:11 (import tritonclient); app/backend/main.py:11 (TritonSegmentationClient)</code></td>
                         </tr>
                         <tr>
-                            <td><a href="https://github.com/CaiZongyuan/fastapi-boto3" target="_blank"><strong>CaiZongyuan/fastapi-boto3</strong></a></td>
-                            <td><span class="tag is-light">Proxy API (Remoto AWS)</span></td>
+                            <td><a href="https://github.com/CaiZongyuan/fastapi-boto3" target="_blank" class="has-text-info"><strong>CaiZongyuan/fastapi-boto3</strong></a></td>
+                            <td><span class="tag">Proxy API (Remoto AWS)</span></td>
                             <td class="has-text-centered has-text-success has-text-weight-bold">1 (Fraco)</td>
                             <td class="has-text-centered">6</td>
                             <td class="has-text-centered">0</td>
@@ -159,10 +157,10 @@ gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_
         </div>
     </section>
 
-    <footer class="footer has-background-dark">
-        <div class="content has-text-centered has-text-white">
+    <footer class="footer">
+        <div class="content has-text-centered">
             <p>
-                <strong>Estudo Experimental (MSR)</strong> estruturado para GitHub Pages utilizando <strong>Bulma CSS</strong>.
+                <strong>Estudo Experimental (MSR)</strong> estruturado para GitHub Pages utilizando <strong>Bulma CSS v1.0.2 (Native Dark Mode)</strong>.
             </p>
         </div>
     </footer>
