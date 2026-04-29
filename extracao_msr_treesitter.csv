@@ -1,0 +1,5 @@
+Repositório,URL,Nível de Acoplamento,Fan-out (Imports Totais),Imports de ML,Chamadas Diretas (ML),Dep. de Serviço (HTTP/Cloud),Ferramentas Versionamento,Tipo de CI
+ALU-BSE/math-for-machine-learning-jan-25-week-1-fastapi-for-math-math_for_ml-fastapi_for_math,https://github.com/ALU-BSE/math-for-machine-learning-jan-25-week-1-fastapi-for-math-math_for_ml-fastapi_for_math,1 (Fraco),90,0,0,13,Nenhuma,GitHub Actions
+wahyudesu/Fastapi-AI-Production-Template,https://github.com/wahyudesu/Fastapi-AI-Production-Template,1 (Fraco),14,0,0,3,Nenhuma,GitHub Actions
+kamjin3086/kokoro-onnx-fastapi,https://github.com/kamjin3086/kokoro-onnx-fastapi,1 (Fraco),22,0,0,2,Nenhuma,Nenhum
+DeepKnowledge1/industrial_anodet_mlops,https://github.com/DeepKnowledge1/industrial_anodet_mlops,4 (Forte),40,4,5,12,Nenhuma,Nenhum
