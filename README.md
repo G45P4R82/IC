@@ -11,20 +11,20 @@ Para garantir a reprodutibilidade do estudo, a extração de dados foi realizada
 ### 1. Estratégia de Busca e Seleção
 Inicialmente, o protocolo previa buscas simples (ex: `"scikit-learn" AND "FastAPI"`). Durante a execução, constatamos que a API do GitHub requer parâmetros mais específicos para evitar repositórios de tutoriais. 
 
-As seguintes *queries* foram executadas para garantir diversidade arquitetural (Amostragem Intencional):
+As seguintes *queries* foram executadas para garantir diversidade arquitetural de repositórios modernos (criados em **2025 e 2026**):
 
 * **Modelos Embarcados (Níveis 3 e 4):**
   ```bash
-  gh api "/search/repositories?q=scikit-learn+fastapi+stars:>20&sort=stars&per_page=10"
-  gh api "/search/repositories?q=fastapi+machine-learning+app+stars:>20&sort=stars&per_page=10"
+  gh api "/search/repositories?q=fastapi+machine-learning+created:>2025-01-01&sort=stars&per_page=10"
   ```
 * **Modelos Agnósticos (ONNX - Nível 2):**
   ```bash
-  gh api "/search/repositories?q=fastapi+onnx+stars:>20&sort=stars&per_page=5"
+  gh api "/search/repositories?q=fastapi+onnx+created:>2025-01-01&sort=stars&per_page=10"
   ```
-* **Modelos Remotos/Cloud (Nível 1):**
+* **Modelos via Servidor de Inferência e Cloud (Nível 1):**
   ```bash
-  gh api "/search/repositories?q=fastapi+boto3+sagemaker+stars:>1&sort=stars&per_page=3"
+  gh api "/search/repositories?q=fastapi+mlflow+created:>2025-01-01&sort=stars&per_page=10"
+  gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_page=10"
   ```
 
 ### 2. Extração de Métricas (Parsing e AST Simulado)
@@ -65,13 +65,11 @@ Abaixo estão os dados minerados e classificados conforme a escala de acoplament
 
 | Repositório | Padrão Arquitetural | Nível de Acoplamento | Fan-out | Imports de ML | Chamadas Diretas | Contexto / Evidência no Código |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| [**cwallaceh/sklearn_fastapi_docker**](https://github.com/cwallaceh/sklearn_fastapi_docker) | API Local (Embarcado) | **4 (Forte)** | 8 | 2 | 1 | `ms/__init__.py:8 (joblib.load)` |
+| [**Suraj-G-Rao/Network_Security**](https://github.com/Suraj-G-Rao/Network_Security) | API Local (Embarcado) | **4 (Forte)** | 11 | 3 | 1 | `app.py:18 (network_model.predict)` |
 | [**zimingttkx/Network-Security-Based-On-ML**](https://github.com/zimingttkx/Network-Security-Based-On-ML) | API Local (Embarcado) | **4 (Forte)** | 31 | 3 | 2 | `app.py:42 (model.predict)` |
-| [**Nneji123/Credit-Card-Fraud-Detection**](https://github.com/Nneji123/Credit-Card-Fraud-Detection) | API Local (Embarcado) | **4 (Forte)** | 6 | 2 | 3 | `app.py:4-5 (import joblib, numpy)` |
-| [**eightBEC/fastapi-ml-skeleton**](https://github.com/eightBEC/fastapi-ml-skeleton) | Wrapper (Embarcado) | **3 (Médio-Forte)** | 12 | 1 | 1 | Esconde a biblioteca na pasta `sample_model` |
-| [**sayakpaul/ml-deployment-k8s-fastapi**](https://github.com/sayakpaul/ml-deployment-k8s-fastapi) | Agnóstico (ONNX) | **2 (Médio-Fraco)**| 14 | 0 | 1 | Usa ONNXRuntime, sem PyTorch. `api/main.py:40` |
-| [**991o2o9/smart-cardiologist**](https://github.com/991o2o9/smart-cardiologist) | Facade API (Remoto) | **1 (Fraco)** | 13 | 0 | 0 | Faz post externo. `src/services/ai_service.py:45` |
-| [**CharlieSergeant/sagemaker-fastapi**](https://github.com/CharlieSergeant/sagemaker-fastapi) | Proxy AWS (Remoto) | **1 (Fraco)** | 15 | 0 | 0 | Usa `boto3` para invocar AWS SageMaker |
+| [**kamjin3086/kokoro-onnx-fastapi**](https://github.com/kamjin3086/kokoro-onnx-fastapi) | Agnóstico (ONNX) | **2 (Médio-Fraco)**| 12 | 0 | 1 | Usa ONNXRuntime. `src/chinese/main.py:10` |
+| [**Harly-1506/polyp-segmentation-mlops**](https://github.com/Harly-1506/polyp-segmentation-mlops) | Triton Inference Server | **1 (Fraco)** | 14 | 0 | 0 | Envia tensor via rede. `app/backend/clients.py:11` |
+| [**CaiZongyuan/fastapi-boto3**](https://github.com/CaiZongyuan/fastapi-boto3) | Proxy AWS (Remoto) | **1 (Fraco)** | 6 | 0 | 0 | Usa `boto3` para invocar AWS Cloud. |
 
 ---
 
