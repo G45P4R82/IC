@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSR: Acoplamento de Modelos ML</title>
+    <!-- Bulma CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-bg { background-color: #2c3e50; color: white; }
+        .hero-bg .title, .hero-bg .subtitle { color: white; }
+        .code-block { background-color: #f5f5f5; padding: 1rem; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+    <section class="hero is-info is-medium hero-bg">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title is-1">
+                    <span class="icon is-large"><i class="fas fa-project-diagram"></i></span>
+                    Acoplamento de Modelos de ML
+                </h1>
+                <h2 class="subtitle is-3">
+                    Estudo MSR - Engenharia de Software Experimental (MC926B/MO630A)
+                </h2>
+                <p>Repositórios Modernos (2025-2026)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <h2 class="title is-3"><i class="fas fa-search"></i> Metodologia de Mineração (MSR)</h2>
+                <p>Para garantir a reprodutibilidade do estudo, a extração de dados foi realizada utilizando a <a href="https://cli.github.com/">GitHub CLI (<code>gh</code>)</a> e a <strong>GitHub REST API</strong>, sem a necessidade de clonar os repositórios localmente.</p>
+                
+                <hr>
+
+                <h3 class="title is-4"><i class="fas fa-filter"></i> 1. Estratégia de Busca e Seleção</h3>
+                <p>As seguintes <em>queries</em> foram executadas para garantir diversidade arquitetural de repositórios modernos (criados em <strong>2025 e 2026</strong>):</p>
+                
+                <div class="columns">
+                    <div class="column">
+                        <div class="box">
+                            <h4 class="title is-5">Modelos Embarcados (Níveis 3 e 4)</h4>
+                            <pre class="code-block"><code>gh api "/search/repositories?q=fastapi+machine-learning+created:>2025-01-01&sort=stars&per_page=10"</code></pre>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="box">
+                            <h4 class="title is-5">Agnósticos (ONNX - Nível 2)</h4>
+                            <pre class="code-block"><code>gh api "/search/repositories?q=fastapi+onnx+created:>2025-01-01&sort=stars&per_page=10"</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4 class="title is-5">Servidor de Inferência e Cloud (Nível 1)</h4>
+                    <pre class="code-block"><code>gh api "/search/repositories?q=fastapi+mlflow+created:>2025-01-01&sort=stars&per_page=10"
+gh api "/search/repositories?q=fastapi+boto3+created:>2025-01-01&sort=stars&per_page=10"</code></pre>
+                </div>
+
+                <hr>
+
+                <h3 class="title is-4"><i class="fas fa-code"></i> 2. Extração de Métricas (AST Simulado)</h3>
+                <p>O script realiza as seguintes extrações de evidências nos arquivos Python:</p>
+                <ul>
+                    <li><strong>Fan-out (Imports Totais):</strong> Contagem de <code>import X</code> e <code>from X import Y</code>.</li>
+                    <li><strong>Imports de ML:</strong> Filtro específico para bibliotecas (<code>sklearn</code>, <code>pandas</code>, <code>numpy</code>, <code>joblib</code>).</li>
+                    <li><strong>Chamadas Diretas de ML:</strong> Busca por invocações como <code>.predict()</code> e <code>joblib.load()</code>.</li>
+                    <li><strong>Dependência de Serviço:</strong> Busca por clientes HTTP (<code>requests.get</code>, <code>boto3.invoke_endpoint</code>).</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section has-background-light">
+        <div class="container">
+            <h2 class="title is-3"><i class="fas fa-table"></i> Dataset e Resultados (Amostra 2025-2026)</h2>
+            <div class="table-container">
+                <table class="table is-striped is-hoverable is-fullwidth is-bordered">
+                    <thead>
+                        <tr class="has-background-info-dark">
+                            <th class="has-text-white">Repositório</th>
+                            <th class="has-text-white">Padrão Arquitetural</th>
+                            <th class="has-text-white has-text-centered">Nível de Acoplamento</th>
+                            <th class="has-text-white has-text-centered">Fan-out</th>
+                            <th class="has-text-white has-text-centered">Imports ML</th>
+                            <th class="has-text-white has-text-centered">Chamadas Diretas</th>
+                            <th class="has-text-white">Evidência no Código</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://github.com/Suraj-G-Rao/Network_Security" target="_blank"><strong>Suraj-G-Rao/Network_Security</strong></a></td>
+                            <td><span class="tag is-light">Modelo Embarcado (API Local)</span></td>
+                            <td class="has-text-centered has-text-danger has-text-weight-bold">4 (Forte)</td>
+                            <td class="has-text-centered">11</td>
+                            <td class="has-text-centered">3</td>
+                            <td class="has-text-centered">1</td>
+                            <td><code>app.py:10 (import pymongo, pandas); app.py:18 (network_model.predict)</code></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/zimingttkx/Network-Security-Based-On-ML" target="_blank"><strong>zimingttkx/Network-Security-Based-On-ML</strong></a></td>
+                            <td><span class="tag is-light">Modelo Embarcado (API Local)</span></td>
+                            <td class="has-text-centered has-text-danger has-text-weight-bold">4 (Forte)</td>
+                            <td class="has-text-centered">31</td>
+                            <td class="has-text-centered">3</td>
+                            <td class="has-text-centered">2</td>
+                            <td><code>app.py:17 (import TrainingPipeline); app.py:42 (model.predict)</code></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/kamjin3086/kokoro-onnx-fastapi" target="_blank"><strong>kamjin3086/kokoro-onnx-fastapi</strong></a></td>
+                            <td><span class="tag is-light">Inference-Agnostic (ONNX)</span></td>
+                            <td class="has-text-centered has-text-success has-text-weight-bold">2 (Médio-Fraco)</td>
+                            <td class="has-text-centered">12</td>
+                            <td class="has-text-centered">0</td>
+                            <td class="has-text-centered">1</td>
+                            <td><code>src/chinese/main.py:10 (pip install kokoro-onnx); src/chinese/main.py:13 (download .onnx)</code></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/Harly-1506/polyp-segmentation-mlops" target="_blank"><strong>Harly-1506/polyp-segmentation-mlops</strong></a></td>
+                            <td><span class="tag is-light">Triton Inference Server</span></td>
+                            <td class="has-text-centered has-text-success has-text-weight-bold">1 (Fraco)</td>
+                            <td class="has-text-centered">14</td>
+                            <td class="has-text-centered">0</td>
+                            <td class="has-text-centered">0</td>
+                            <td><code>app/backend/clients.py:11 (import tritonclient); app/backend/main.py:11 (TritonSegmentationClient)</code></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/CaiZongyuan/fastapi-boto3" target="_blank"><strong>CaiZongyuan/fastapi-boto3</strong></a></td>
+                            <td><span class="tag is-light">Proxy API (Remoto AWS)</span></td>
+                            <td class="has-text-centered has-text-success has-text-weight-bold">1 (Fraco)</td>
+                            <td class="has-text-centered">6</td>
+                            <td class="has-text-centered">0</td>
+                            <td class="has-text-centered">0</td>
+                            <td><code>main.py (Delega requests puramente via AWS boto3 runtime)</code></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <p class="help is-info">* Clique no nome do repositório para acessar a URL original no GitHub.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container content">
+            <h2 class="title is-3"><i class="fas fa-lightbulb"></i> Conclusões Arquiteturais</h2>
+            <div class="message is-success">
+                <div class="message-body">
+                    <strong>1. Predominância do Acoplamento Forte:</strong> Na maioria das APIs de ML (Nível 4), a aplicação importa bibliotecas matemáticas pesadas diretamente na rota. <br><br>
+                    <strong>2. Ferramentas MLOps vs. Isolamento:</strong> A presença de ferramentas como MLflow ou Docker não garante o isolamento do modelo no código-fonte Python.<br><br>
+                    <strong>3. Padrões de Baixo Acoplamento:</strong> Alcançados ao exportar para grafos padronizados (ONNX) ou ao delegar a inferência para microsserviços/Cloud (AWS Boto3, Triton).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer has-background-dark">
+        <div class="content has-text-centered has-text-white">
+            <p>
+                <strong>Estudo Experimental (MSR)</strong> estruturado para GitHub Pages utilizando <strong>Bulma CSS</strong>.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
